@@ -1,0 +1,4 @@
+interface: lo  # Interface de rede padrão
+time_window: 10  # Janela de tempo em segundos para considerar as tentativas de conexão
+port_threshold: 5  # Número mínimo de portas diferentes que indicam um possível scan
+fragmentation_limit: 5  # Limite de fragmentos de pacotes antes de considerar evasão
