@@ -55,27 +55,6 @@ def detect_service_os_scan(packet):
         
     return False
 
-def detect_fragmentation_evasion(packet):
-    """
-    Detecta tentativas de evasão por fragmentação.
-    """
-    if IP in packet and packet[IP].flags == 1:  # Pacote fragmentado
-        return True
-        
-    return False
-
-def detect_firewall_evasion(packet):
-    """
-    Detecta tentativas de evasão de firewall, como pacotes fragmentados ou pacotes TCP com flags incomuns.
-    """
-    if TCP in packet:
-        flags = packet[TCP].flags
-        if flags == 0:  # Pacote com flags TCP nulas (pacote nulo)
-            return True
-        if flags == "FPU":  # Pacote com flags FIN, PSH, URG para evadir firewalls
-            return True
-    return False
-
 def packet_callback(packet, port_scan_detector, evasion_detector, scan_tracker, logger):
     ip_src = packet[IP].src
 
@@ -97,14 +76,8 @@ def packet_callback(packet, port_scan_detector, evasion_detector, scan_tracker, 
             print(alert_msg)
             logger.info(alert_msg)
             scan_tracker.add_detection(ip_src)
-        
-        if detect_firewall_evasion(packet):
-            alert_msg = f"Tentativa de evasão de firewall detectada de {ip_src}!"
-            print(alert_msg)
-            logger.info(alert_msg)
-            scan_tracker.add_detection(ip_src)
 
-        if detect_fragmentation_evasion(packet):
+        if evasion_detector.detect_fragmentation(packet):
             alert_msg = f"Tentativa de evasão por fragmentação detectada de {ip_src}!"
             print(alert_msg)
             logger.info(alert_msg)

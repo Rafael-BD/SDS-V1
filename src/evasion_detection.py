@@ -1,3 +1,5 @@
+from scapy.layers.inet import TCP
+
 class EvasionDetector:
     def __init__(self, fragmentation_limit=5):
         self.fragmented_packets = {}
@@ -34,7 +36,7 @@ class EvasionDetector:
         :param packet: Pacote capturado.
         :return: Boolean indicando se um decoy scan foi detectado.
         """
-        # Exemplo simplificado: detectar múltiplos IPs como fontes do mesmo scan
+        
         if packet.haslayer("IP"):
             src_ip = packet["IP"].src
             dst_ip = packet["IP"].dst
