@@ -37,19 +37,19 @@ def detect_udp_scan(packet):
 
 def detect_service_os_scan(packet):
     """
-    Verifica a presença de pacotes que indicam um scan de serviço ou SO.
-    Esses pacotes geralmente envolvem várias portas e pacotes com diferentes opções TCP.
+    Check for packets indicating a service or OS scan.
+    These packets usually involve multiple ports and packets with different TCP options.
     """
     if TCP in packet:
-        # Verifica por flags que indicam tentativa de descoberta de SO
+        # Check for flags indicating OS discovery attempt
         flags = packet[TCP].flags
         options = packet[TCP].options
         
-        # Verificar se flags são SYN e também opções TCP como Timestamps (indicativo de detecção de SO)
+        # Check if flags are SYN and TCP options like Timestamps (indicative of OS detection)
         if flags == "S" and any(opt[0] == "Timestamp" for opt in options):
             return True
         
-        # Verifica múltiplas tentativas de conexão (SYN) para diferentes portas
+        # Check for multiple connection attempts (SYN) to different ports
         if flags == "S":
             return True
         
@@ -60,25 +60,25 @@ def packet_callback(packet, port_scan_detector, evasion_detector, scan_tracker, 
 
     if not scan_tracker.is_recently_detected(ip_src):
         if port_scan_detector.detect_scan(packet):
-            alert_msg = f"TCP Scan detectado de {ip_src}!"
+            alert_msg = f"TCP Scan detected from {ip_src}!"
             print(alert_msg)
             logger.info(alert_msg)
             scan_tracker.add_detection(ip_src)
         
         if detect_udp_scan(packet):
-            alert_msg = f"UDP Scan detectado de {ip_src}!"
+            alert_msg = f"UDP Scan detected from {ip_src}!"
             print(alert_msg)
             logger.info(alert_msg)
             scan_tracker.add_detection(ip_src)
 
         if detect_service_os_scan(packet):
-            alert_msg = f"Scan de Serviço/SO detectado de {ip_src}!"
+            alert_msg = f"Service/OS Scan detected from {ip_src}!"
             print(alert_msg)
             logger.info(alert_msg)
             scan_tracker.add_detection(ip_src)
 
         if evasion_detector.detect_fragmentation(packet):
-            alert_msg = f"Tentativa de evasão por fragmentação detectada de {ip_src}!"
+            alert_msg = f"Fragmentation evasion attempt detected from {ip_src}!"
             print(alert_msg)
             logger.info(alert_msg)
             scan_tracker.add_detection(ip_src)
@@ -87,7 +87,7 @@ def start_sniffing(interface, port_scan_detector, evasion_detector):
     scan_tracker = ScanTracker()
     logger = setup_logger()
     
-    print(f"Analisando interface {interface}...")
+    print(f"Analyzing interface {interface}...")
     sniff(
         iface=interface,
         prn=lambda x: packet_callback(x, port_scan_detector, evasion_detector, scan_tracker, logger),

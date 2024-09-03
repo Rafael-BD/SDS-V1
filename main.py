@@ -9,7 +9,7 @@ def load_config():
 def main():
     config = load_config()
 
-    # Inicializa o detector com as configurações do config.yaml
+    # Initialize the ScanDetector class with the parameters from the config file
     detector = ScanDetector(
         interface=config["interface"],
         time_window=config["time_window"],

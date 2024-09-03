@@ -1,4 +1,4 @@
-interface: lo  # Interface de rede padrão
-time_window: 5  # Janela de tempo em segundos para considerar as tentativas de conexão
-port_threshold: 5  # Número mínimo de portas diferentes que indicam um possível scan
-fragmentation_limit: 5  # Limite de fragmentos de pacotes antes de considerar evasão
+interface: lo  # network interface to listen for packets
+time_window: 5  # Time window in seconds to consider connection attempts
+port_threshold: 5  # Minimum number of different ports indicating a possible scan
+fragmentation_limit: 5  # Limit of packet fragments before considering evasion

@@ -7,10 +7,10 @@ class EvasionDetector:
 
     def detect_fragmentation(self, packet):
         """
-        Detecta tentativas de evasão por fragmentação.
+        Detects fragmentation evasion attempts.
 
-        :param packet: Pacote capturado.
-        :return: Boolean indicando se uma evasão por fragmentação foi detectada.
+        :param packet: Captured packet.
+        :return: Boolean indicating whether a fragmentation evasion was detected.
         """
         
         if packet.haslayer("IP"):
@@ -31,10 +31,10 @@ class EvasionDetector:
 
     def detect_decoy_scan(self, packet):
         """
-        Detecta scans que utilizam múltiplos IPs (decoy scan).
+        Detects scans that use multiple IPs (decoy scan).
         
-        :param packet: Pacote capturado.
-        :return: Boolean indicando se um decoy scan foi detectado.
+        :param packet: Captured packet.
+        :return: Boolean indicating whether a decoy scan was detected.
         """
         
         if packet.haslayer("IP"):

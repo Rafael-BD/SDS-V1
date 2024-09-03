@@ -5,6 +5,8 @@ This is a basic scan detection system developed in Python using the Scapy librar
 
 > **Note**: This project is a simple example of a basic scan detection system and is meant for educational purposes.
 
+<img src="image.png">
+
 ### Detection Types
 
 1. **TCP Port Scan**: Detects attempts to probe TCP ports.
@@ -17,8 +19,8 @@ This is a basic scan detection system developed in Python using the Scapy librar
 
 1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/Rafael-BD/SSD-V1.git
-    cd scan-detector
+    git clone https://github.com/Rafael-BD/SimpleScanDetector.git
+    cd SimpleScanDetector
     ```
 
 2. **Install Dependencies**: Ensure that you have Python and Scapy installed:
@@ -32,9 +34,9 @@ This is a basic scan detection system developed in Python using the Scapy librar
     - `port_threshold`: Minimum number of different ports that indicate a possible scan.
     - `fragmentation_limit`: Limit of packet fragments before considering evasion.
 
-4. **Run the Detector**:
+4. **Run the Detector (as administrator)**:
     ```bash
-    python main.py
+    sudo python main.py
     ```
 
 5. **Manual Testing with Nmap**
